@@ -2,6 +2,8 @@
 - [셸의 기능과 종류](#셸의-기능과-종류)
 - [셸 기본 사용법](#셸-기본-사용법)
 - [입출력 방향 바꾸기](#입출력-방향-바꾸기)
+- [배시 셸 환경 설정](#배시-셸-환경-설정)
+- [에일리어스와 히스토리](#에일리어스와-히스토리)
 
 ## 셸의 기능과 종류
 ### 셸
@@ -72,3 +74,61 @@ user1@myubuntu:~$ printf "%d+%d=%d\n" 10 10 20
 
 
 ## 입출력 방향 바꾸기
+
+
+## 배시 셸 환경 설정
+### 셸 변수와 환경 변수
+셸 변수는 각 셸별로 따로 지정되어 독립적인 반면, 환경 변수는 로그인 셸과 서브 셸에 모두 공통적으로 적용된다.
+- 셸 변수 : 현재 셸에서만 사용
+- 환경 변수 : 현재 셸뿐만 아니라 서브 셸로도 전달  
+셸 변수는 각 셸별로 따로 지정되어 독립적인 반면, 환경 변수는 로그인 셸과 서브 셸에 모두 공통적으로 적용
+#### 주요 환경 변수
+- HISTSIZE : 히스토리 저장 크기
+- HOME : 사용자 홈 디렉터리의 절대 경로
+- LANG : 사용하는 언어
+- LOGNAME : 사용자 계정 이름
+- PATH : 명령을 탐색할 경로
+- PWD : 작업 디렉터리 절대 경로
+- SHELL : 로그인 셸
+```
+mimdong@mimdongs-MacBook-Pro book % echo $HISTSIZE
+2000
+mimdong@mimdongs-MacBook-Pro Pem % echo $PWD
+/Users/mimdong/Pem
+mimdong@mimdongs-MacBook-Pro Pem % echo $SHELL
+/bin/zsh
+mimdong@mimdongs-MacBook-Pro Pem % echo $HOME
+/Users/mimdong
+mimdong@mimdongs-MacBook-Pro Pem % echo $LANG
+ko_KR.UTF-8
+mimdong@mimdongs-MacBook-Pro Pem % echo $LOGNAME
+mimdong
+mimdong@mimdongs-MacBook-Pro Pem % echo $PATH
+/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/mimdong/Library/Application Support/JetBrains/Toolbox/scripts:/Users/mimdong/Library/Application Support/JetBrains/Toolbox/scripts
+mimdong@mimdongs-MacBook-Pro Pem % echo $PWD
+/Users/mimdong/Pem
+mimdong@mimdongs-MacBook-Pro Pem % echo $SHELL
+/bin/zsh
+```
+### 변수 출력
+- set : 셸 변수와 환경 변수 모두 출력
+- env : 환경 변수만 모두 출력
+- echo : 특정 변수 출력 (변수 앞에 $를 붙여야 한다.)
+```
+mimdong@mimdongs-MacBook-Pro book % echo $SHELL
+/bin/zsh
+```
+
+
+## 에일리어스와 히스토리
+### 에일리어스
+명령에 다른 별칭을 붙인다.
+- alias 이름='명령' : 에일리어스 생성
+- unalias 에일리어스 : 에일리어스 해제
+
+### 히스토리
+사용한 명령을 기억했다가 재실행하는 기능
+- history : 히스토리(명령 입력 기록)를 출력한다.
+- !! : 바로 직전에 실행한 명령을 재실행한다.
+- !번호 : 히스토리에서 해당 번호의 명령을 재실행한다.
+- !문자열 : 히스토리에서 해당 문자열로 시작하는 마지막 명령을 재실행한다.
