@@ -15,3 +15,4 @@
 - [CHAPTER 11. 네트워크 설정](/ubuntu_linux_system_and_network/Chapter%2011.%20%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC%20%EC%84%A4%EC%A0%95.md)
 - [CHAPTER 12. 원격 접속과 FTP](/ubuntu_linux_system_and_network/Chapter%2012.%20%EC%9B%90%EA%B2%A9%20%EC%A0%91%EC%86%8D%EA%B3%BC%20FTP.md)
 - [CHAPTER 14. NFS와 Samba](/ubuntu_linux_system_and_network/Chapter%2014.%20NFS%EC%99%80%20Samba.md)
+- [CHAPTER 15. 리눅스 보안의 기초](/ubuntu_linux_system_and_network/Chapter%2015.%20%EB%A6%AC%EB%88%85%EC%8A%A4%20%EB%B3%B4%EC%95%88%EC%9D%98%20%EA%B8%B0%EC%B4%88.md)
