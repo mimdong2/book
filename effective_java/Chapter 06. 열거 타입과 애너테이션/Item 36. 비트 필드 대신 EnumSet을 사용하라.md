@@ -40,7 +40,8 @@ text.applyStyles(BOLD | ITALIC);    // `text.applyStyles(3)`
     - 3이라는 숫자는 BOLD, ITALIC 이라는 정보를 가지고 있지 않으므로 해석하기가 어려워진다.
     - 해석을 위해 비트 필드에 녹아 있는 모든 원소를 순회해야 하는 문제도 있다.
 - 비트 필드의 자료형을 미리 예측해야 한다.
-    - 정의한 상수 개수가 늘어날 때마다 쉬프트 연산하는 비트 값도 커지므로 보통 타입을 int(32bit) 나 long(64bit) 중 선택해야 한다.
+    - 정의한 상수 개수가 늘어날 때마다 쉬프트 연산하는 비트 값도 커진다.
+    - API를 수정하지 않고서는 비트 수를 늘릴 수는 없다. (보통 타입을 int(32bit) 나 long(64bit) 중 선택)
 
 <br>
 
@@ -75,6 +76,7 @@ text.applyStyles(BOLD | ITALIC);    // `text.applyStyles(3)`
 - 다른 Set 구현체와도 함께 사용 가능하다.
     - 위 예시 처럼, applyStyles 메서드에 인자를 `EnumSet<Style>` 이 아니라 `Set<Style>` 로 선언하였다.
     - 모든 클라이언트가 EnumSet 을 건네리라 생각되지만, 이왕이면 인터페이스로 선언하는 것이 좋은 습관이다. (아이템64)
+    - 좀 특이한 클라이언트가 다른 Set 구현체를 넘기더라도 처리할 수 있다. ([아이템38](/effective_java/Chapter%2006.%20%EC%97%B4%EA%B1%B0%20%ED%83%80%EC%9E%85%EA%B3%BC%20%EC%95%A0%EB%84%88%ED%85%8C%EC%9D%B4%EC%85%98/Item%2038.%20%ED%99%95%EC%9E%A5%ED%95%A0%20%EC%88%98%20%EC%9E%88%EB%8A%94%20%EC%97%B4%EA%B1%B0%20%ED%83%80%EC%9E%85%EC%9D%B4%20%ED%95%84%EC%9A%94%ED%95%98%EB%A9%B4%20%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%A5%BC%20%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC.md))
 - 정보도 그대로 가지고 있다.
     - `text.applyStyles(EnumSet.of(Style.BOLD, Style.ITALIC, Style.UNDERLINE));`
 - 비트 필드에 비견되는 성능을 보여준다.
@@ -86,4 +88,4 @@ text.applyStyles(BOLD | ITALIC);    // `text.applyStyles(3)`
 > EnumSet VS Set   
 > // 기능은 같으나 성능적으로 큰 차이가 있다.
 - EnumSet의 모든 메서드는 비트 연산을 사용하고 있으며 64개 이하라면 하나의 long 비트만을 사용합니다. 각 계산에 대해 하나의 비트만 검사하는 EnumSet과 해시 코드를 계산해야 하는 HashSet을 비교한다면 당연히 EnumSet이 빠릅니다.
-- 즉, Enum 값을 집합으로 저장할 일이 있다면 가능한 EnumSet을 사용하는 것이 좋습니다.
+- 즉, 성능 측면에서보자면 EnumSet 사용하는 것이 좋다. (물론, 경우에 따라서는 적절한 타입을 써야 함)

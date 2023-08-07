@@ -17,6 +17,7 @@
 - 아래 코드 처럼 열거 패턴은 static final int 로 값을 정의하여 한 묶음으로 선언 했었다.
 ```java
 public class Constants {
+    // Day
     public static final int MONDAY = 0;
     public static final int TUESDAY = 1;
     public static final int WEDNESDAY = 2;
@@ -25,15 +26,16 @@ public class Constants {
     public static final int SATURDAY = 5;
     public static final int SUNDAY = 6;
 
+    // Sign
     public static final int RED = 0;
     public static final int ORANGE = 1;
     public static final int GREEN = 2;
 }
 ```
 - 구현하기 쉽지만 단점 투성이다.
-  - 컴파일러가 이해하는 값은 정의한 값 그 자체이다. 즉 그 값의 의미를 볼 수 없어서 불편하다. (`APPLE_FUJI`를 프린트 못함)
+  - 컴파일러가 이해하는 값은 정의한 값 그 자체이다. 즉 그 값의 의미를 볼 수 없어서 불편하다. (`FRIDAY`를 프린트 못함)
   - 컴파일하면 값 자체가 클라이언트 파일에 그대로 새겨진다. 즉 그 값을 바꾸면 클라이언트는 재 컴파일 해야 한다. (다시 컴파일 안하면 엉뚱하게 동작)
-  - 동등 연산자 (== 혹은 equals) 로 비교하는 경우, 오류가 생길 수 있다. (`ORANGE`를 보내야 하는데 `APPLE`를 보낼 수도 있음)
+  - 동등 연산자 (== 혹은 equals) 로 비교하는 경우, 오류가 생길 수 있다. (`MONDAY`를 보내야 하는데 `RED`를 보낼 수도 있음)
 
 <br>
 
@@ -86,7 +88,7 @@ public enum DATABASE { MYSQL, POSTGRESQL, MARIA, REDIS }
   - 열거 타입으로 인스턴스 통제된다, 즉 열거 타입 선언으로 만들어진 인스턴스들은 딱 하나씩만 존재한다.
     - 열거 타입 자체가 클래스이고, 상수 하나 당 자신의 인스턴스를 하나씩 만들어 `public static final` 필드로 공개한다.
     - public 생성자를 제공하지 않으므로(사실상 `final`), 클라이언트가 인스턴스를 직접 생성하거나 확장할 수 없다.
-- 임의의 메서드나 필드를 추가할 수 있다??? 임의의 인터페이스를 구현하게 할 수도 있다???
+- 추가로, 열거 타입은 임의의 메서드나 필드를 추가할 수 있다. 그리고 임의의 인터페이스를 구현하게 할 수도 있다.
 
 <br>
 
