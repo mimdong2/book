@@ -8,3 +8,4 @@
 - [CHAPTER 07. 람다와 스트림](/effective_java/Chapter%2007.%20%EB%9E%8C%EB%8B%A4%EC%99%80%20%EC%8A%A4%ED%8A%B8%EB%A6%BC)
 - [CHAPTER 08. 메서드](/effective_java/Chapter%2008.%20메서드)
 - [CHAPTER 09. 일반적인 프로그래밍 원칙](/effective_java/Chapter%2009.%20일반적인%20프로그래밍%20원칙)
+- [CHAPTER 12. 직렬화](/effective_java/Chapter%2012.%20%EC%A7%81%EB%A0%AC%ED%99%94/)
