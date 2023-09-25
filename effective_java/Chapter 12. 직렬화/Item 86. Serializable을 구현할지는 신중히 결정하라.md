@@ -5,9 +5,11 @@
 - [상속용으로 설계된 클래스, 인터페이스는 Serializable을 확장하면 안된다.](#상속용으로-설계된-클래스는-serializable을-구현하면-안되며-인터페이스도-serializable을-확장하면-안된다)
 - [내부 클래스는 Serializable을 구현하면 안된다.](#내부-클래스는-serializable을-구현하면-안된다)
 
+<br>
+
 ## Serializable을 구현하면 릴리즈 뒤에는 수정하기 어렵다.
-- 클래스가 Serializable을 구현하게 되면 직렬화된 바이트 스트림 인코딩도 하나의 공개 API가 된다. 때문에 이 클래스가 널리 퍼지면 그 직렬화 형태도 영원히 지원해야한다.
-- 즉, Serializable을 구현한 순간부터 해당 객체의 직렬화 형태는 Java 직렬화에 묶이는 것이다. 기본 직렬화 형태에서는 private와 package-private 수준의 필드마저도 API로 공개가 된다. 즉, 캡슐화가 깨진다.
+- 클래스가 Serializable을 구현하게 되면 직렬화된 바이트 스트림 인코딩(직렬화 형태)도 하나의 공개 API가 된다. 때문에 이 클래스가 널리 퍼지면 그 직렬화 형태도 (공개 API와 마찬가지로) 영원히 지원해야한다.
+- 기본 직렬화 형태에서는 private와 package-private 수준의 필드마저도 API로 공개가 된다. 즉, 캡슐화가 깨진다.
 - person 객체를 ObjectOutputStream을 통해 직렬화를 한 뒤에 이를 FileOutputStream을 통해 `/Users/mimdong/personSerialize.txt` 에 객체 내용을 저장하면 다음과 같이 나타난다.
 ```java
 @Test
@@ -44,8 +46,8 @@ void deserialize() throws IOException {
         }
     }
 
-    System.out.println(person.name);
-    System.out.println(person.age);
+    System.out.println(person.name);  // sun
+    System.out.println(person.age);   // 31
 }
 ```
 - 단, 만약에 Person에 새로운 필드가 필요하다고 가정한다. 키 height와 몸무게 weight 정보가 추가되었는데 이렇게 필드가 추가된 경우 앞서 직렬화된 객체를 역직렬화할 수 없다. 기본적으로 serialVersionUID는 정의하지 않으면 해당 객체의 hashCode를 기반으로 설정이 되는데 height와 weight가 추가되면서 serialVersionUID이 바뀐 것이다. 때문에 실패가 발생한다.
@@ -67,6 +69,31 @@ public class Person implements Serializable {
     }
 }
 ```
+```java
+@Test
+void deserialize() throws IOException {
+    Person person = null;
+
+    String SERIALIZE_OBJECT_FILE_PATH = "/Users/mimdong/personSerialize.txt";
+
+    try (FileInputStream fileInputStream = new FileInputStream(SERIALIZE_OBJECT_FILE_PATH)) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+            person = (Person) objectInputStream.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    System.out.println(person.name);    // sun
+    System.out.println(person.age);     // 31
+    System.out.println(person.weight);  // 0.0
+    System.out.println(person.height);  // 0.0
+}
+```
+- 기존에 Person은 name과 age만 존재했으므로 height와 weight에는 double의 기본값인 0으로 할당되어 역직렬화된다.
+- 그러나 serialVersionUID의 한계가 있는데. serialVersionUID는 클래스에 필드가 추가 / 제거 되는 경우에 역직렬화 에러가 발생하는 문제를 해결해주지만 기존에 존재하던 변수 이름을 변경했을때 해당 데이터는 누락된다.
+
+<br>
 
 ## 버그와 보안 구멍이 생길 위험이 높아진다.
 - 객체를 생성하는 가장 기본적인 방법은 생성자를 이용하는 것이다.
